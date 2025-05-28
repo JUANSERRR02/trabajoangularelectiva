@@ -1,0 +1,65 @@
+<div class="container mt-4">
+  <h2 class="mb-4">GPU</h2>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Add New GPU</h5>
+      <form (ngSubmit)="addGpu()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="newGpu.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="brand" class="form-label">Brand</label>
+          <input type="text" class="form-control" id="brand" [(ngModel)]="newGpu.brand" name="brand" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add GPU</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mb-4" *ngIf="editingGpu">
+    <div class="card-body">
+      <h5 class="card-title">Edit GPU</h5>
+      <form (ngSubmit)="updateGpu()">
+        <div class="mb-3">
+          <label for="editName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="editName" [(ngModel)]="editingGpu.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="editMemory" class="form-label">Brand</label>
+          <input type="text" class="form-control" id="editBrand" [(ngModel)]="editingGpu.brand" name="brand" required />
+        </div>
+        <button type="submit" class="btn btn-success me-2">Save Changes</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- List of GPUs -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Memory (GB)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gpu of gpus">
+        <td>{{ gpu._id }}</td>
+        <td>{{ gpu.name }}</td>
+        <td>{{ gpu.brand }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="startEdit(gpu)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteGpu(gpu._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

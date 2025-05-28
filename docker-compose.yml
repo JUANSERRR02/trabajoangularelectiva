@@ -1,0 +1,41 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo-shin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-shin
+    ports:
+      - "8002:8001"
+    environment:
+      - MONGO_URI=mongodb://localhost:27017/mi-db
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend-shin
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
