@@ -17,7 +17,7 @@ services:
     ports:
       - "8002:8001"
     environment:
-      - MONGO_URI=mongodb://localhost:27017/mi-db
+      - MONGO_URI=mongodb://51.210.177.195:27017/mi-db
     depends_on:
       - mongo
     networks:
