@@ -8,7 +8,7 @@ const MONGO_LOCAL = "mongodb://localhost:27017/mi-db";
 const MONGO_SERVER = "mongodb://51.210.177.195:27017/mi-db";
 
 mongoose
-  .connect(MONGO_LOCAL)
+  .connect(MONGO_SERVER)
   .then(() => console.log("Connected to Mongolandia"))
   .catch((err) => console.error("Mongolandia connection error:", err));
 
