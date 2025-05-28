@@ -9,12 +9,18 @@ const {
 function cpuRoutes(req, res) {
   const { url, method } = req;
 
-  const idMatch = url.match(/\/cpu\/(\w+)$/);
+  if (!url.startsWith('/api/cpu')) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ error: "Not Found" }));
+  }
+
+  const baseRoute = url.replace('/api', '');
+  const idMatch = baseRoute.match(/\/cpu\/(\w+)$/);
   const id = idMatch ? idMatch[1] : null;
 
-  if (url === "/cpu" && method === "GET") {
+  if (baseRoute === "/cpu" && method === "GET") {
     getAll(req, res);
-  } else if (url === "/cpu" && method === "POST") {
+  } else if (baseRoute === "/cpu" && method === "POST") {
     createOne(req, res);
   } else if (id && method === "GET") {
     getOne(req, res, id);
