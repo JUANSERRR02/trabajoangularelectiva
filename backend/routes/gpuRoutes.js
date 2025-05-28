@@ -9,12 +9,20 @@ const {
 function gpuRoutes(req, res) {
   const { url, method } = req;
 
-  const idMatch = url.match(/\/gpu\/(\w+)$/);
+  // Check if the URL starts with /api/gpu
+  if (!url.startsWith('/api/gpu')) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ error: "Not Found" }));
+  }
+
+  // Remove the /api prefix and match the remaining path
+  const baseRoute = url.replace('/api', '');
+  const idMatch = baseRoute.match(/\/gpu\/(\w+)$/);
   const id = idMatch ? idMatch[1] : null;
 
-  if (url === "/gpu" && method === "GET") {
+  if (baseRoute === "/gpu" && method === "GET") {
     getAll(req, res);
-  } else if (url === "/gpu" && method === "POST") {
+  } else if (baseRoute === "/gpu" && method === "POST") {
     createOne(req, res);
   } else if (id && method === "GET") {
     getOne(req, res, id);

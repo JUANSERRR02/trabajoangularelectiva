@@ -9,12 +9,20 @@ const {
 function motherboardRoutes(req, res) {
   const { url, method } = req;
 
-  const idMatch = url.match(/\/motherboards\/(\w+)$/);
+  // Check if the URL starts with /api/motherboards
+  if (!url.startsWith('/api/motherboard')) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ error: "Not Found" }));
+  }
+
+  // Remove the /api prefix and match the remaining path
+  const baseRoute = url.replace('/api', '');
+  const idMatch = baseRoute.match(/\/motherboard\/(\w+)$/);
   const id = idMatch ? idMatch[1] : null;
 
-  if (url === "/motherboards" && method === "GET") {
+  if (baseRoute === "/motherboard" && method === "GET") {
     getAll(req, res);
-  } else if (url === "/motherboards" && method === "POST") {
+  } else if (baseRoute === "/motherboard" && method === "POST") {
     createOne(req, res);
   } else if (id && method === "GET") {
     getOne(req, res, id);

@@ -9,12 +9,18 @@ const {
 function psuRoutes(req, res) {
   const { url, method } = req;
 
-  const idMatch = url.match(/\/psu\/(\w+)$/);
+  if (!url.startsWith('/api/psu')) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ error: "Not Found" }));
+  }
+
+  const baseRoute = url.replace('/api', '');
+  const idMatch = baseRoute.match(/\/psu\/(\w+)$/);
   const id = idMatch ? idMatch[1] : null;
 
-  if (url === "/psu" && method === "GET") {
+  if (baseRoute === "/psu" && method === "GET") {
     getAll(req, res);
-  } else if (url === "/psu" && method === "POST") {
+  } else if (baseRoute === "/psu" && method === "POST") {
     createOne(req, res);
   } else if (id && method === "GET") {
     getOne(req, res, id);
