@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <h2 class="mb-4">CPU</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Add CPU Form -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Add New CPU</h5>
+      <form (ngSubmit)="addCpu()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="newCpu.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="cores" class="form-label">Cores</label>
+          <input type="number" class="form-control" id="cores" [(ngModel)]="newCpu.cores" name="cores" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add CPU</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit CPU Form -->
+  <div class="card mb-4" *ngIf="editingCpu">
+    <div class="card-body">
+      <h5 class="card-title">Edit CPU</h5>
+      <form (ngSubmit)="updateCpu()">
+        <div class="mb-3">
+          <label for="editName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="editName" [(ngModel)]="editingCpu.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="editCores" class="form-label">Cores</label>
+          <input type="number" class="form-control" id="editCores" [(ngModel)]="editingCpu.cores" name="cores" required />
+        </div>
+        <button type="submit" class="btn btn-success me-2">Save Changes</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- List of CPUs -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Cores</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cpu of cpus">
+        <td>{{ cpu._id }}</td>
+        <td>{{ cpu.name }}</td>
+        <td>{{ cpu.cores }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="startEdit(cpu)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCpu(cpu._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

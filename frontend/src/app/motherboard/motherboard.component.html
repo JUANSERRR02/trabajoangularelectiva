@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Motherboard</h2>
+
+  <!-- Error Alert -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Add New Motherboard Form -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Add New Motherboard</h5>
+      <form (ngSubmit)="addMotherboard()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="newMotherboard.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="formFactor" class="form-label">Form Factor</label>
+          <input type="text" class="form-control" id="formFactor" [(ngModel)]="newMotherboard.formFactor" name="formFactor" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Motherboard</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Motherboard Form -->
+  <div class="card mb-4" *ngIf="editingMotherboard">
+    <div class="card-body">
+      <h5 class="card-title">Edit Motherboard</h5>
+      <form (ngSubmit)="updateMotherboard()">
+        <div class="mb-3">
+          <label for="editName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="editName" [(ngModel)]="editingMotherboard.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="editFormFactor" class="form-label">Form Factor</label>
+          <input type="text" class="form-control" id="editFormFactor" [(ngModel)]="editingMotherboard.formFactor" name="formFactor" required />
+        </div>
+        <button type="submit" class="btn btn-success me-2">Save Changes</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- List of Motherboards -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Form Factor</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let motherboard of motherboards">
+        <td>{{ motherboard._id }}</td>
+        <td>{{ motherboard.name }}</td>
+        <td>{{ motherboard.formFactor }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="startEdit(motherboard)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteMotherboard(motherboard._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

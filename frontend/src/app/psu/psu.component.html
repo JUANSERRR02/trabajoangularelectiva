@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <h2 class="mb-4">PSU</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Add PSU Form -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Add New PSU</h5>
+      <form (ngSubmit)="addPsu()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="newPsu.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="wattage" class="form-label">Wattage</label>
+          <input type="number" class="form-control" id="wattage" [(ngModel)]="newPsu.wattage" name="wattage" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add PSU</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit PSU Form -->
+  <div class="card mb-4" *ngIf="editingPsu">
+    <div class="card-body">
+      <h5 class="card-title">Edit PSU</h5>
+      <form (ngSubmit)="updatePsu()">
+        <div class="mb-3">
+          <label for="editName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="editName" [(ngModel)]="editingPsu.name" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="editWattage" class="form-label">Wattage</label>
+          <input type="number" class="form-control" id="editWattage" [(ngModel)]="editingPsu.wattage" name="wattage" required />
+        </div>
+        <button type="submit" class="btn btn-success me-2">Save Changes</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- List of PSUs -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Wattage</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let psu of psus">
+        <td>{{ psu._id }}</td>
+        <td>{{ psu.name }}</td>
+        <td>{{ psu.wattage }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="startEdit(psu)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deletePsu(psu._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
